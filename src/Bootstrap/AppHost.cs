@@ -2,7 +2,7 @@
 using GestorContrasena.Models;
 using GestorContrasena.ViewModels;
 using GestorContrasena.Views;
-using static Class1;
+using GestorContrasena.Utilities;
 
 namespace GestorContrasena.Bootstrap
 {
