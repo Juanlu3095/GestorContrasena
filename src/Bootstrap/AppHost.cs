@@ -54,7 +54,7 @@ namespace GestorContrasena.Bootstrap
             switch(destino)
             {
                 case "InicioSesion":
-                    System.Diagnostics.Debug.WriteLine("Ha llegado el evento");
+                    System.Diagnostics.Debug.WriteLine("Ha llegado el evento para inicio sesión");
                     break;
 
                 case "Registro":

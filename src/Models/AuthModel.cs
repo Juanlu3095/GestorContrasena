@@ -19,17 +19,17 @@ namespace GestorContrasena.Models
             {
                 var dbconnection = this.connection.CreateConnection();
                 dbconnection?.Open();
-                var sqlCommand = new NpgsqlCommand("INSERT INTO users (name, email, password) VALUES (@name,@email,@password)", dbconnection);
+                var sqlCommand = new NpgsqlCommand("INSERT INTO users (name, email, password) VALUES (@name,@email,@password)", dbconnection); // Crear id más segura
                 sqlCommand.Parameters.AddWithValue("name", user.Name);
                 sqlCommand.Parameters.AddWithValue("email", user.Email);
-                sqlCommand.Parameters.AddWithValue("password", user.Password);
+                sqlCommand.Parameters.AddWithValue("password", user.Password); // Encriptar esto
                 var result = sqlCommand.ExecuteNonQuery();
                 dbconnection?.Close();
                 return result;
 
             } catch (NpgsqlException e)
             {
-                MessageBox.Show("Ha ocurrido un error al ejecutar el registro: " + e.ToString());
+                System.Diagnostics.Debug.WriteLine("Ha ocurrido un error en el registro: " + e.StackTrace);
                 return null;
             }
         }

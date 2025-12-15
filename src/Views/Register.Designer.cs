@@ -51,7 +51,7 @@
             // labelName
             // 
             labelName.AutoSize = true;
-            labelName.Location = new Point(193, 161);
+            labelName.Location = new Point(245, 156);
             labelName.Name = "labelName";
             labelName.Size = new Size(53, 15);
             labelName.TabIndex = 1;
@@ -60,7 +60,7 @@
             // labelEmail
             // 
             labelEmail.AutoSize = true;
-            labelEmail.Location = new Point(193, 204);
+            labelEmail.Location = new Point(245, 204);
             labelEmail.Name = "labelEmail";
             labelEmail.Size = new Size(36, 15);
             labelEmail.TabIndex = 2;
@@ -69,7 +69,7 @@
             // labelPassword
             // 
             labelPassword.AutoSize = true;
-            labelPassword.Location = new Point(193, 246);
+            labelPassword.Location = new Point(245, 246);
             labelPassword.Name = "labelPassword";
             labelPassword.Size = new Size(69, 15);
             labelPassword.TabIndex = 3;
@@ -77,7 +77,7 @@
             // 
             // RegisterButton
             // 
-            RegisterButton.Location = new Point(335, 329);
+            RegisterButton.Location = new Point(335, 326);
             RegisterButton.Name = "RegisterButton";
             RegisterButton.Size = new Size(116, 23);
             RegisterButton.TabIndex = 4;
@@ -87,21 +87,21 @@
             // 
             // NameInput
             // 
-            NameInput.Location = new Point(299, 153);
+            NameInput.Location = new Point(335, 153);
             NameInput.Name = "NameInput";
             NameInput.Size = new Size(203, 23);
             NameInput.TabIndex = 5;
             // 
             // EmailInput
             // 
-            EmailInput.Location = new Point(299, 201);
+            EmailInput.Location = new Point(335, 201);
             EmailInput.Name = "EmailInput";
             EmailInput.Size = new Size(203, 23);
             EmailInput.TabIndex = 6;
             // 
             // PasswordInput
             // 
-            PasswordInput.Location = new Point(299, 243);
+            PasswordInput.Location = new Point(335, 243);
             PasswordInput.Name = "PasswordInput";
             PasswordInput.PasswordChar = '*';
             PasswordInput.Size = new Size(203, 23);
