@@ -3,20 +3,22 @@ using GestorContrasena.Models;
 using GestorContrasena.ViewModels;
 using GestorContrasena.Views;
 using GestorContrasena.Utilities;
+using GestorContrasena.Services;
 
 namespace GestorContrasena.Bootstrap
 {
     internal class AppHost
     {
-        string host;
-        int port;
-        string dbname;
-        string user;
-        string password;
+        readonly string host;
+        readonly int port;
+        readonly string dbname;
+        readonly string user;
+        readonly string password;
 
-        public Connection Connection;
-        public AuthModel AuthModel;
-        public RegisterViewModel RegisterViewModel;
+        private Connection Connection;
+        private UserModel UserModel;
+        private AuthService AuthService; 
+        private RegisterViewModel RegisterViewModel;
         public Register RegisterView;
 
         public AppHost ()
@@ -25,23 +27,26 @@ namespace GestorContrasena.Bootstrap
             var dotenv = Path.Combine(root, ".env");
             DotEnv.Load(dotenv);
 
-            this.host = Environment.GetEnvironmentVariable("host");
+            this.host = Environment.GetEnvironmentVariable("host") ?? "localhost";
             this.port = Convert.ToInt32(Environment.GetEnvironmentVariable("port"));
-            this.dbname = Environment.GetEnvironmentVariable("dbname");
-            this.user = Environment.GetEnvironmentVariable("user");
-            this.password = Environment.GetEnvironmentVariable("password");
+            this.dbname = Environment.GetEnvironmentVariable("dbname") ?? "postgres";
+            this.user = Environment.GetEnvironmentVariable("user") ?? "root";
+            this.password = Environment.GetEnvironmentVariable("password") ?? "";
 
             // Database connection configuration
             Connection = new Connection(host, port, dbname, user, password);
 
             // Models
-            AuthModel = new AuthModel(this.Connection);
+            UserModel = new UserModel(this.Connection);
+
+            // Services
+            AuthService = new AuthService(this.UserModel);
 
             // ViewModels
-            RegisterViewModel = new RegisterViewModel(AuthModel);
+            RegisterViewModel = new RegisterViewModel(this.AuthService);
 
             // Views
-            RegisterView = new Register(RegisterViewModel);
+            RegisterView = new Register(this.RegisterViewModel);
 
             // Events for navigation
             RegisterViewModel.OnNavigate += Navigate;

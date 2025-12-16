@@ -1,18 +1,19 @@
 ﻿using GestorContrasena.Contracts.Entities;
 using GestorContrasena.Contracts.Interfaces;
 using GestorContrasena.Schemas;
+using GestorContrasena.Services;
 
 namespace GestorContrasena.ViewModels
 {
     internal class RegisterViewModel : RegisterViewModelInterface
     {
-        private readonly AuthModelInterface AuthModel; 
+        private readonly AuthServiceInterface authService; 
 
         public event Action<string>? OnNavigate;
 
-        public RegisterViewModel (AuthModelInterface AuthModel)
+        public RegisterViewModel (AuthServiceInterface authService)
         {
-            this.AuthModel = AuthModel;
+            this.authService = authService;
         }
 
         public void RegisterAction (string name, string email, string password)
@@ -35,8 +36,8 @@ namespace GestorContrasena.ViewModels
 
             } else
             {
-                var result = this.AuthModel.Register(user);
-                if (result != null)
+                var result = this.authService.Register(user);
+                if (result)
                 {
                     MessageBox.Show("Registro realizado correctamente.", "Registro correcto");
                 }

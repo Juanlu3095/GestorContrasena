@@ -11,10 +11,10 @@ namespace GestorContrasena.Schemas
 
             result.success = true;
             
-            if (user.Name == "")
+            if (String.IsNullOrWhiteSpace(user.Name))
             {
                 result.success = false;
-                result.setErrorName("El campo nombre está vacío.");
+                result.setErrorName("El campo nombre no tiene un formato correcto.");
             }
 
             if (!CustomValidations.ValidateEmail(user.Email))
@@ -23,10 +23,10 @@ namespace GestorContrasena.Schemas
                 result.setErrorEmail("El campo email no tiene un formato correcto.");
             }
 
-            if (user.Password == "")
+            if (String.IsNullOrWhiteSpace(user.Password))
             {
                 result.success = false;
-                result.setErrorPassword("El campo contraseña está vacío.");
+                result.setErrorPassword("El campo contraseña no tiene un formato correcto.");
             }
 
             return result;
