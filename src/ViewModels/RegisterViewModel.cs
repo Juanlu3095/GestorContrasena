@@ -1,7 +1,7 @@
 ﻿using GestorContrasena.Contracts.Entities;
+using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using GestorContrasena.Schemas;
-using GestorContrasena.Services;
 
 namespace GestorContrasena.ViewModels
 {
@@ -36,15 +36,24 @@ namespace GestorContrasena.ViewModels
 
             } else
             {
-                var result = this.authService.Register(user);
-                if (result)
+                try
                 {
-                    MessageBox.Show("Registro realizado correctamente.", "Registro correcto");
-                }
-                else
+                    var result = this.authService.Register(user);
+
+                    if (result != null)
+                    {
+                        MessageBox.Show("Registro realizado correctamente.", "Registro correcto");
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se ha podido realizar el registro. Consulte con su técnico.", "Error en el registro");
+                    }
+
+                } catch (EmailAlreadyExistsException e)
                 {
-                    MessageBox.Show("No se ha podido realizar el registro. Consulte con su técnico.", "Error en el registro");
+                    MessageBox.Show(e.Message, "Error en el registro");
                 }
+                
             }
         }
 

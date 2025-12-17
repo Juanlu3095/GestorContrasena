@@ -4,6 +4,7 @@ using GestorContrasena.ViewModels;
 using GestorContrasena.Views;
 using GestorContrasena.Utilities;
 using GestorContrasena.Services;
+using GestorContrasena.Database.Queries;
 
 namespace GestorContrasena.Bootstrap
 {
@@ -17,6 +18,7 @@ namespace GestorContrasena.Bootstrap
 
         private Connection Connection;
         private UserModel UserModel;
+        private UserQueries UserQueries;
         private AuthService AuthService; 
         private RegisterViewModel RegisterViewModel;
         public Register RegisterView;
@@ -39,8 +41,11 @@ namespace GestorContrasena.Bootstrap
             // Models
             UserModel = new UserModel(this.Connection);
 
+            // Queries
+            UserQueries = new UserQueries(this.Connection);
+
             // Services
-            AuthService = new AuthService(this.UserModel);
+            AuthService = new AuthService(this.UserModel, this.UserQueries);
 
             // ViewModels
             RegisterViewModel = new RegisterViewModel(this.AuthService);

@@ -4,7 +4,7 @@ namespace GestorContrasena.Contracts.Interfaces
 {
     internal interface AuthServiceInterface
     {
-        public bool Register(UserEntity user);
+        public bool? Register(UserEntity user);
 
         public bool Login(UserEntity user);
 
