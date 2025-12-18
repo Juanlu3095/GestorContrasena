@@ -5,7 +5,7 @@ namespace GestorContrasena.Schemas
 {
     internal class UserSchema
     {
-        public static UserRegisterValidation UserRegisterValidation (UserEntity user)
+        public static UserRegisterValidation UserRegisterValidation (UserEntity user, string repeat_password)
         {
             UserRegisterValidation result = new UserRegisterValidation();
 
@@ -27,6 +27,12 @@ namespace GestorContrasena.Schemas
             {
                 result.success = false;
                 result.setErrorPassword("El campo contraseña no tiene un formato correcto.");
+            }
+
+            if (String.IsNullOrWhiteSpace(repeat_password) || repeat_password != user.Password)
+            {
+                result.success = false;
+                result.setErrorRepeatPassword("El campo repetir contraseña no tiene un formato correcto o no coincide con el campo contraseña.");
             }
 
             return result;

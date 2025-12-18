@@ -19,7 +19,7 @@ namespace GestorContrasena.Views
         /// <param name="e"></param>
         private void RegisterAction(object sender, EventArgs e)
         {
-            this.RegisterViewModel.RegisterAction(this.NameInput.Text, this.EmailInput.Text, this.PasswordInput.Text);
+            this.RegisterViewModel.RegisterAction(this.NameInput.Text, this.EmailInput.Text, this.PasswordInput.Text, this.RepeatPasswordInput.Text);
         }
     }
 }

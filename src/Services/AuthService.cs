@@ -24,6 +24,7 @@ namespace GestorContrasena.Services
 
                 if(repeatedUsers == 0)
                 {
+                    // Encriptar contraseña
                     return this.userModel.Create(user) == 1 ? true : false;
 
                 } else

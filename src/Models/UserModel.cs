@@ -21,13 +21,13 @@ namespace GestorContrasena.Models
             {
                 var dbconnection = this.connection.CreateConnection();
                 dbconnection?.Open();
-                var sqlCommand = new NpgsqlCommand("SELECT name, email from users;", dbconnection); // Crear id más segura
+                var sqlCommand = new NpgsqlCommand("SELECT name, email from users;", dbconnection);
                 var reader = sqlCommand.ExecuteReader();
 
                 while (reader.Read())
                 {
                     UserEntity user = new UserEntity();
-                    user.Id = reader.GetString(reader.GetOrdinal("id"));
+                    user.Id = reader.GetGuid(reader.GetOrdinal("id"));
                     user.Name = reader.GetString(reader.GetOrdinal("name"));
                     user.Email = reader.GetString(reader.GetOrdinal("email"));
 
@@ -52,13 +52,13 @@ namespace GestorContrasena.Models
             {
                 var dbconnection = this.connection.CreateConnection();
                 dbconnection?.Open();
-                var sqlCommand = new NpgsqlCommand("SELECT name, email from users WHERE id = @id", dbconnection); // Crear id más segura
+                var sqlCommand = new NpgsqlCommand("SELECT name, email from users WHERE id = @id", dbconnection);
                 sqlCommand.Parameters.AddWithValue("id", id);
                 var reader = sqlCommand.ExecuteReader();
                 
-                while (reader.Read())
+                if (reader.Read())
                 {
-                    user.Id = reader.GetString(reader.GetOrdinal("id"));
+                    user.Id = reader.GetGuid(reader.GetOrdinal("id"));
                     user.Name = reader.GetString(reader.GetOrdinal("name"));
                     user.Email = reader.GetString(reader.GetOrdinal("email"));
                 }
@@ -79,7 +79,7 @@ namespace GestorContrasena.Models
             {
                 var dbconnection = this.connection.CreateConnection();
                 dbconnection?.Open();
-                var sqlCommand = new NpgsqlCommand("INSERT INTO users (name, email, password) VALUES (@name,@email,@password)", dbconnection); // Crear id más segura
+                var sqlCommand = new NpgsqlCommand("INSERT INTO users (name, email, password) VALUES (@name,@email,@password)", dbconnection);
                 sqlCommand.Parameters.AddWithValue("name", user.Name);
                 sqlCommand.Parameters.AddWithValue("email", user.Email);
                 sqlCommand.Parameters.AddWithValue("password", user.Password); // Encriptar esto
@@ -100,7 +100,7 @@ namespace GestorContrasena.Models
             {
                 var dbconnection = this.connection.CreateConnection();
                 dbconnection?.Open();
-                var sqlCommand = new NpgsqlCommand("UPDATE users SET name = @name, email = @email, password = @password WHERE id = @id", dbconnection); // Crear id más segura
+                var sqlCommand = new NpgsqlCommand("UPDATE users SET name = @name, email = @email, password = @password WHERE id = @id", dbconnection);
                 sqlCommand.Parameters.AddWithValue("id", user.Id);
                 sqlCommand.Parameters.AddWithValue("name", user.Name);
                 sqlCommand.Parameters.AddWithValue("email", user.Email);
@@ -122,7 +122,7 @@ namespace GestorContrasena.Models
             {
                 var dbconnection = this.connection.CreateConnection();
                 dbconnection?.Open();
-                var sqlCommand = new NpgsqlCommand("DELETE FROM users WHERE id = @id", dbconnection); // Crear id más segura
+                var sqlCommand = new NpgsqlCommand("DELETE FROM users WHERE id = @id", dbconnection);
                 sqlCommand.Parameters.AddWithValue("id", id);
                 var result = sqlCommand.ExecuteNonQuery();
                 dbconnection?.Close();

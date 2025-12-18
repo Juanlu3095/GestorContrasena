@@ -6,6 +6,6 @@ namespace GestorContrasena.Contracts.Interfaces
     {
         public void ToLogin();
 
-        public void RegisterAction(string name, string email, string password);
+        public void RegisterAction(string name, string email, string password, string repeat_password);
     }
 }

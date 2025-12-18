@@ -16,14 +16,14 @@ namespace GestorContrasena.ViewModels
             this.authService = authService;
         }
 
-        public void RegisterAction (string name, string email, string password)
+        public void RegisterAction (string name, string email, string password, string repeat_password)
         {
             UserEntity user = new UserEntity();
             user.Name = name;
             user.Email = email;
             user.Password = password;
 
-            UserRegisterValidation validation = UserSchema.UserRegisterValidation(user);
+            UserRegisterValidation validation = UserSchema.UserRegisterValidation(user, repeat_password);
 
             if (!validation.success)
             {

@@ -36,6 +36,8 @@
             NameInput = new TextBox();
             EmailInput = new TextBox();
             PasswordInput = new TextBox();
+            RepeatPasswordInput = new TextBox();
+            labelRepeatPassword = new Label();
             SuspendLayout();
             // 
             // labelRegister
@@ -51,7 +53,7 @@
             // labelName
             // 
             labelName.AutoSize = true;
-            labelName.Location = new Point(245, 156);
+            labelName.Location = new Point(245, 128);
             labelName.Name = "labelName";
             labelName.Size = new Size(53, 15);
             labelName.TabIndex = 1;
@@ -60,7 +62,7 @@
             // labelEmail
             // 
             labelEmail.AutoSize = true;
-            labelEmail.Location = new Point(245, 204);
+            labelEmail.Location = new Point(245, 173);
             labelEmail.Name = "labelEmail";
             labelEmail.Size = new Size(36, 15);
             labelEmail.TabIndex = 2;
@@ -69,7 +71,7 @@
             // labelPassword
             // 
             labelPassword.AutoSize = true;
-            labelPassword.Location = new Point(245, 246);
+            labelPassword.Location = new Point(245, 216);
             labelPassword.Name = "labelPassword";
             labelPassword.Size = new Size(69, 15);
             labelPassword.TabIndex = 3;
@@ -77,7 +79,7 @@
             // 
             // RegisterButton
             // 
-            RegisterButton.Location = new Point(335, 326);
+            RegisterButton.Location = new Point(333, 327);
             RegisterButton.Name = "RegisterButton";
             RegisterButton.Size = new Size(116, 23);
             RegisterButton.TabIndex = 4;
@@ -87,31 +89,50 @@
             // 
             // NameInput
             // 
-            NameInput.Location = new Point(335, 153);
+            NameInput.Location = new Point(375, 125);
             NameInput.Name = "NameInput";
             NameInput.Size = new Size(203, 23);
             NameInput.TabIndex = 5;
             // 
             // EmailInput
             // 
-            EmailInput.Location = new Point(335, 201);
+            EmailInput.Location = new Point(375, 170);
             EmailInput.Name = "EmailInput";
             EmailInput.Size = new Size(203, 23);
             EmailInput.TabIndex = 6;
             // 
             // PasswordInput
             // 
-            PasswordInput.Location = new Point(335, 243);
+            PasswordInput.Location = new Point(375, 213);
             PasswordInput.Name = "PasswordInput";
             PasswordInput.PasswordChar = '*';
             PasswordInput.Size = new Size(203, 23);
             PasswordInput.TabIndex = 7;
+            // 
+            // RepeatPasswordInput
+            // 
+            RepeatPasswordInput.Location = new Point(375, 262);
+            RepeatPasswordInput.Name = "RepeatPasswordInput";
+            RepeatPasswordInput.PasswordChar = '*';
+            RepeatPasswordInput.Size = new Size(203, 23);
+            RepeatPasswordInput.TabIndex = 8;
+            // 
+            // labelRepeatPassword
+            // 
+            labelRepeatPassword.AutoSize = true;
+            labelRepeatPassword.Location = new Point(245, 265);
+            labelRepeatPassword.Name = "labelRepeatPassword";
+            labelRepeatPassword.Size = new Size(114, 15);
+            labelRepeatPassword.TabIndex = 9;
+            labelRepeatPassword.Text = "Repetir Contraseña";
             // 
             // Register
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(labelRepeatPassword);
+            Controls.Add(RepeatPasswordInput);
             Controls.Add(PasswordInput);
             Controls.Add(EmailInput);
             Controls.Add(NameInput);
@@ -137,5 +158,7 @@
         private TextBox NameInput;
         private TextBox EmailInput;
         private TextBox PasswordInput;
+        private TextBox RepeatPasswordInput;
+        private Label labelRepeatPassword;
     }
 }

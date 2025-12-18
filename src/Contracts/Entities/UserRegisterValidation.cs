@@ -28,5 +28,10 @@ namespace GestorContrasena.Contracts.Entities
             this.errors["password"] = errorPassword;
         }
 
+        public void setErrorRepeatPassword (string errorRepeatPassword)
+        {
+            this.errors["repeat_password"] = errorRepeatPassword;
+        }
+
     }
 }
