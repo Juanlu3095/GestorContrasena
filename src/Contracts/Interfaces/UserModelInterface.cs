@@ -6,12 +6,12 @@ namespace GestorContrasena.Contracts.Interfaces
     {
         public List<UserEntity>? GetAll();
 
-        public UserEntity? GetById(int id);
+        public UserEntity? GetById(Guid id);
 
         public int? Create(UserEntity user);
 
-        public int? Update(int id, UserEntity user);
+        public int? Update(Guid id, UserEntity user);
 
-        public int? Delete(int id);
+        public int? Delete(Guid id);
     }
 }

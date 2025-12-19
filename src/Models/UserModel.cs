@@ -44,7 +44,7 @@ namespace GestorContrasena.Models
             }
         }
 
-        public UserEntity? GetById(int id)
+        public UserEntity? GetById(Guid id)
         {
             UserEntity user = new UserEntity();
 
@@ -82,7 +82,7 @@ namespace GestorContrasena.Models
                 var sqlCommand = new NpgsqlCommand("INSERT INTO users (name, email, password) VALUES (@name,@email,@password)", dbconnection);
                 sqlCommand.Parameters.AddWithValue("name", user.Name);
                 sqlCommand.Parameters.AddWithValue("email", user.Email);
-                sqlCommand.Parameters.AddWithValue("password", user.Password); // Encriptar esto
+                sqlCommand.Parameters.AddWithValue("password", user.Password);
                 var result = sqlCommand.ExecuteNonQuery();
                 dbconnection?.Close();
                 return result;
@@ -94,7 +94,7 @@ namespace GestorContrasena.Models
             }
         }
 
-        public int? Update (int id, UserEntity user)
+        public int? Update (Guid id, UserEntity user) // Ver si es necesario mantener la id aquí o se coge la que lleve UserEntity
         {
             try
             {
@@ -104,7 +104,7 @@ namespace GestorContrasena.Models
                 sqlCommand.Parameters.AddWithValue("id", user.Id);
                 sqlCommand.Parameters.AddWithValue("name", user.Name);
                 sqlCommand.Parameters.AddWithValue("email", user.Email);
-                sqlCommand.Parameters.AddWithValue("password", user.Password); // Encriptar esto
+                sqlCommand.Parameters.AddWithValue("password", user.Password);
                 var result = sqlCommand.ExecuteNonQuery();
                 dbconnection?.Close();
                 return result;
@@ -116,7 +116,7 @@ namespace GestorContrasena.Models
                 return null;
             }
         }
-        public int? Delete(int id)
+        public int? Delete(Guid id)
         {
             try
             {

@@ -15,6 +15,7 @@ namespace GestorContrasena.Bootstrap
         readonly string dbname;
         readonly string user;
         readonly string password;
+        readonly int bcryptcost;
 
         private Connection Connection;
         private UserModel UserModel;
@@ -34,6 +35,7 @@ namespace GestorContrasena.Bootstrap
             this.dbname = Environment.GetEnvironmentVariable("dbname") ?? "postgres";
             this.user = Environment.GetEnvironmentVariable("user") ?? "root";
             this.password = Environment.GetEnvironmentVariable("password") ?? "";
+            this.bcryptcost = Convert.ToInt32(Environment.GetEnvironmentVariable("bcryptcost"));
 
             // Database connection configuration
             Connection = new Connection(host, port, dbname, user, password);
@@ -45,7 +47,7 @@ namespace GestorContrasena.Bootstrap
             UserQueries = new UserQueries(this.Connection);
 
             // Services
-            AuthService = new AuthService(this.UserModel, this.UserQueries);
+            AuthService = new AuthService(this.UserModel, this.UserQueries, this.bcryptcost);
 
             // ViewModels
             RegisterViewModel = new RegisterViewModel(this.AuthService);

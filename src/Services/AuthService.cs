@@ -9,11 +9,13 @@ namespace GestorContrasena.Services
     {
         private UserModelInterface userModel;
         private UserQueriesInterface userQueries;
+        private int bcryptcost; // Esto no hace falta usarlo al validar la contraseña porque la contraseña hasheada ya tiene este coste dentro.
 
-        public AuthService (UserModelInterface userModel, UserQueriesInterface userQueries)
+        public AuthService (UserModelInterface userModel, UserQueriesInterface userQueries, int bcryptcost)
         {
             this.userModel = userModel;
             this.userQueries = userQueries;
+            this.bcryptcost = bcryptcost != 0 ? bcryptcost : 12;
         }
 
         public bool? Register(UserEntity user)
@@ -24,7 +26,9 @@ namespace GestorContrasena.Services
 
                 if(repeatedUsers == 0)
                 {
-                    // Encriptar contraseña
+                    var HashPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, bcryptcost); // Si no se pone, el valor de workFactor es 10
+                    user.Password = HashPassword;
+
                     return this.userModel.Create(user) == 1 ? true : false;
 
                 } else

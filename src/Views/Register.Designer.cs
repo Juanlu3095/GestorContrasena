@@ -43,7 +43,7 @@
             // labelRegister
             // 
             labelRegister.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelRegister.Location = new Point(270, 38);
+            labelRegister.Location = new Point(293, 37);
             labelRegister.Name = "labelRegister";
             labelRegister.Size = new Size(256, 36);
             labelRegister.TabIndex = 0;
