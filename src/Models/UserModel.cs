@@ -73,6 +73,35 @@ namespace GestorContrasena.Models
             }
         }
 
+        public UserEntity? GetByEmail(string email)
+        {
+            UserEntity user = new UserEntity();
+
+            try
+            {
+                var dbconnection = this.connection.CreateConnection();
+                dbconnection?.Open();
+                var sqlCommand = new NpgsqlCommand("SELECT name, email, password from users WHERE email = @email", dbconnection);
+                sqlCommand.Parameters.AddWithValue("email", email);
+                var reader = sqlCommand.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    user.Name = reader.GetString(reader.GetOrdinal("name"));
+                    user.Email = reader.GetString(reader.GetOrdinal("email"));
+                    user.Password = reader.GetString(reader.GetOrdinal("password"));
+                }
+
+                dbconnection?.Close();
+                return user;
+            }
+            catch (NpgsqlException e)
+            {
+                System.Diagnostics.Debug.WriteLine("Ha ocurrido un error al obtener el usuario: " + e);
+                return null;
+            }
+        }
+
         public int? Create(UserEntity user)
         {
             try

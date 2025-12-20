@@ -2,6 +2,7 @@
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using Npgsql;
+using System.Diagnostics;
 
 namespace GestorContrasena.Services
 {
@@ -43,9 +44,26 @@ namespace GestorContrasena.Services
             }
         }
 
-        public bool Login(UserEntity user)
+        public bool? Login(UserEntity LoginInput)
         {
-            return false;
+            try
+            {
+                var user = this.userModel.GetByEmail(LoginInput.Email);
+
+                if (user == null)
+                {
+                    return false;
+                }
+                Debug.WriteLine("INPUT: " + LoginInput.Password);
+                Debug.WriteLine("HASH: " + user.Password);
+                Debug.WriteLine("IGUALES: " + (LoginInput.Password == user.Password));
+                return BCrypt.Net.BCrypt.Verify(LoginInput.Password, user.Password);
+                
+            } catch (NpgsqlException e)
+            {
+                System.Diagnostics.Debug.WriteLine("Ha ocurrido un error al obtener el usuario: " + e);
+                return null;
+            }
         }
 
         public bool VerifyLogin()

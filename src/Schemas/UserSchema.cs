@@ -38,5 +38,26 @@ namespace GestorContrasena.Schemas
             return result;
         }
 
+        public static UserLoginValidation UserLoginValidation(UserEntity user)
+        {
+            UserLoginValidation result = new UserLoginValidation();
+
+            result.success = true;
+
+            if (!CustomValidations.ValidateEmail(user.Email))
+            {
+                result.success = false;
+                result.setErrorEmail("El campo email no tiene un formato correcto.");
+            }
+
+            if (String.IsNullOrWhiteSpace(user.Password))
+            {
+                result.success = false;
+                result.setErrorPassword("El campo contraseña no tiene un formato correcto.");
+            }
+
+            return result;
+        }
+
     }
 }

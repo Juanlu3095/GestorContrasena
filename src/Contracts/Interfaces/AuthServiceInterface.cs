@@ -6,7 +6,7 @@ namespace GestorContrasena.Contracts.Interfaces
     {
         public bool? Register(UserEntity user);
 
-        public bool Login(UserEntity user);
+        public bool? Login(UserEntity user);
 
         public bool VerifyLogin();
 

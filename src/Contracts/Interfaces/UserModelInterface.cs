@@ -8,6 +8,8 @@ namespace GestorContrasena.Contracts.Interfaces
 
         public UserEntity? GetById(Guid id);
 
+        public UserEntity? GetByEmail(string email);
+
         public int? Create(UserEntity user);
 
         public int? Update(Guid id, UserEntity user);

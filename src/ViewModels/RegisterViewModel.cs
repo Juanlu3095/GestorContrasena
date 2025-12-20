@@ -59,7 +59,7 @@ namespace GestorContrasena.ViewModels
 
         public void ToLogin()
         {
-            this.OnNavigate?.Invoke("InicioSesion");
+            this.OnNavigate?.Invoke("Login");
         }
     }
 }

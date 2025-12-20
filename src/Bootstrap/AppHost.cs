@@ -22,7 +22,9 @@ namespace GestorContrasena.Bootstrap
         private UserQueries UserQueries;
         private AuthService AuthService; 
         private RegisterViewModel RegisterViewModel;
+        private LoginViewModel LoginViewModel;
         public Register RegisterView;
+        public Login LoginView;
 
         public AppHost ()
         {
@@ -51,12 +53,14 @@ namespace GestorContrasena.Bootstrap
 
             // ViewModels
             RegisterViewModel = new RegisterViewModel(this.AuthService);
+            LoginViewModel = new LoginViewModel(this.AuthService);
 
             // Views
             RegisterView = new Register(this.RegisterViewModel);
+            LoginView = new Login(this.LoginViewModel);
 
             // Events for navigation
-            RegisterViewModel.OnNavigate += Navigate;
+            LoginViewModel.OnNavigate += Navigate;
             
         }
 
@@ -65,14 +69,15 @@ namespace GestorContrasena.Bootstrap
         {
             switch(destino)
             {
-                case "InicioSesion":
+                case "Login":
                     System.Diagnostics.Debug.WriteLine("Ha llegado el evento para inicio sesión");
                     break;
 
-                case "Registro":
+                case "Register":
+                    this.RegisterView.Show();
                     break;
 
-                case "ListadoContrasenas":
+                case "PasswordList":
                     break;
             }
         }
