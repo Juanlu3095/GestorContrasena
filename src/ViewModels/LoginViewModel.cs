@@ -1,4 +1,4 @@
-﻿using GestorContrasena.Contracts.Entities;
+﻿using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Interfaces;
 using GestorContrasena.Schemas;
 
@@ -11,11 +11,11 @@ namespace GestorContrasena.ViewModels
 
         public void LoginAction(string email, string password)
         {
-            UserEntity user = new UserEntity();
+            UserLoginInput user = new UserLoginInput();
             user.Email = email;
             user.Password = password;
 
-            UserLoginValidation validation = UserSchema.UserLoginValidation(user);
+            UserLoginValidationResult validation = UserSchema.UserLoginValidation(user);
 
             if (!validation.success)
             {

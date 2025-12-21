@@ -1,12 +1,12 @@
-﻿using GestorContrasena.Contracts.Entities;
+﻿using GestorContrasena.Contracts.Entities.User;
 
 namespace GestorContrasena.Contracts.Interfaces
 {
     internal interface AuthServiceInterface
     {
-        public bool? Register(UserEntity user);
+        public bool? Register(UserRegisterInput user);
 
-        public bool? Login(UserEntity user);
+        public bool? Login(UserLoginInput user);
 
         public bool VerifyLogin();
 

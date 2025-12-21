@@ -1,4 +1,4 @@
-﻿using GestorContrasena.Contracts.Entities;
+﻿using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Interfaces;
 using Npgsql;
 
@@ -102,7 +102,7 @@ namespace GestorContrasena.Models
             }
         }
 
-        public int? Create(UserEntity user)
+        public int? Create(UserRegisterInput user)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace GestorContrasena.Models
             }
         }
 
-        public int? Update (Guid id, UserEntity user) // Ver si es necesario mantener la id aquí o se coge la que lleve UserEntity
+        public int? Update (UserEntity user) // Ver si es necesario mantener la id aquí o se coge la que lleve UserEntity
         {
             try
             {

@@ -1,4 +1,4 @@
-﻿using GestorContrasena.Contracts.Entities;
+﻿using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using Npgsql;
@@ -19,7 +19,7 @@ namespace GestorContrasena.Services
             this.bcryptcost = bcryptcost != 0 ? bcryptcost : 12;
         }
 
-        public bool? Register(UserEntity user)
+        public bool? Register(UserRegisterInput user)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace GestorContrasena.Services
             }
         }
 
-        public bool? Login(UserEntity LoginInput)
+        public bool? Login(UserLoginInput LoginInput)
         {
             try
             {
@@ -54,9 +54,7 @@ namespace GestorContrasena.Services
                 {
                     return false;
                 }
-                Debug.WriteLine("INPUT: " + LoginInput.Password);
-                Debug.WriteLine("HASH: " + user.Password);
-                Debug.WriteLine("IGUALES: " + (LoginInput.Password == user.Password));
+
                 return BCrypt.Net.BCrypt.Verify(LoginInput.Password, user.Password);
                 
             } catch (NpgsqlException e)

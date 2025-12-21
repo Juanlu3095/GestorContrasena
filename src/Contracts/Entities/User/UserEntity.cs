@@ -1,6 +1,4 @@
-﻿
-
-namespace GestorContrasena.Contracts.Entities
+﻿namespace GestorContrasena.Contracts.Entities.User
 {
     internal class UserEntity
     {

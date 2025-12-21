@@ -1,13 +1,13 @@
-﻿using GestorContrasena.Contracts.Entities;
+﻿using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Utilities;
 
 namespace GestorContrasena.Schemas
 {
     internal class UserSchema
     {
-        public static UserRegisterValidation UserRegisterValidation (UserEntity user, string repeat_password)
+        public static UserRegisterValidationResult UserRegisterValidation (UserRegisterInput user)
         {
-            UserRegisterValidation result = new UserRegisterValidation();
+            UserRegisterValidationResult result = new UserRegisterValidationResult();
 
             result.success = true;
             
@@ -29,7 +29,7 @@ namespace GestorContrasena.Schemas
                 result.setErrorPassword("El campo contraseña no tiene un formato correcto.");
             }
 
-            if (String.IsNullOrWhiteSpace(repeat_password) || repeat_password != user.Password)
+            if (String.IsNullOrWhiteSpace(user.RepeatPassword) || user.RepeatPassword != user.Password)
             {
                 result.success = false;
                 result.setErrorRepeatPassword("El campo repetir contraseña no tiene un formato correcto o no coincide con el campo contraseña.");
@@ -38,9 +38,9 @@ namespace GestorContrasena.Schemas
             return result;
         }
 
-        public static UserLoginValidation UserLoginValidation(UserEntity user)
+        public static UserLoginValidationResult UserLoginValidation(UserLoginInput user)
         {
-            UserLoginValidation result = new UserLoginValidation();
+            UserLoginValidationResult result = new UserLoginValidationResult();
 
             result.success = true;
 

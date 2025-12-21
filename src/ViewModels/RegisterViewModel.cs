@@ -1,4 +1,4 @@
-﻿using GestorContrasena.Contracts.Entities;
+﻿using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using GestorContrasena.Schemas;
@@ -18,12 +18,13 @@ namespace GestorContrasena.ViewModels
 
         public void RegisterAction (string name, string email, string password, string repeat_password)
         {
-            UserEntity user = new UserEntity();
+            UserRegisterInput user = new UserRegisterInput();
             user.Name = name;
             user.Email = email;
             user.Password = password;
+            user.RepeatPassword = repeat_password;
 
-            UserRegisterValidation validation = UserSchema.UserRegisterValidation(user, repeat_password);
+            UserRegisterValidationResult validation = UserSchema.UserRegisterValidation(user);
 
             if (!validation.success)
             {

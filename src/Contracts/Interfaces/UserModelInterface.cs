@@ -1,4 +1,4 @@
-﻿using GestorContrasena.Contracts.Entities;
+﻿using GestorContrasena.Contracts.Entities.User;
 
 namespace GestorContrasena.Contracts.Interfaces
 {
@@ -10,9 +10,9 @@ namespace GestorContrasena.Contracts.Interfaces
 
         public UserEntity? GetByEmail(string email);
 
-        public int? Create(UserEntity user);
+        public int? Create(UserRegisterInput user);
 
-        public int? Update(Guid id, UserEntity user);
+        public int? Update(UserEntity user);
 
         public int? Delete(Guid id);
     }

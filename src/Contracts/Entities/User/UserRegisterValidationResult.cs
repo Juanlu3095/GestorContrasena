@@ -1,8 +1,6 @@
-﻿
-
-namespace GestorContrasena.Contracts.Entities
+﻿namespace GestorContrasena.Contracts.Entities.User
 {
-    internal class UserRegisterValidation
+    internal class UserRegisterValidationResult
     {
         public bool success { get; set; }
 
@@ -10,27 +8,27 @@ namespace GestorContrasena.Contracts.Entities
 
         public Dictionary<string, string> GetErrors ()
         {
-            return this.errors;
+            return errors;
         }
 
         public void setErrorName (string errorName)
         {
-            this.errors["nombre"] = errorName;
+            errors["nombre"] = errorName;
         }
 
         public void setErrorEmail (string errorEmail)
         {
-            this.errors["email"] = errorEmail;
+            errors["email"] = errorEmail;
         }
 
         public void setErrorPassword (string errorPassword)
         {
-            this.errors["password"] = errorPassword;
+            errors["password"] = errorPassword;
         }
 
         public void setErrorRepeatPassword (string errorRepeatPassword)
         {
-            this.errors["repeat_password"] = errorRepeatPassword;
+            errors["repeat_password"] = errorRepeatPassword;
         }
 
     }
