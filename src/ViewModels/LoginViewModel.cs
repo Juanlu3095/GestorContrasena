@@ -1,6 +1,8 @@
 ﻿using GestorContrasena.Contracts.Entities.User;
+using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using GestorContrasena.Schemas;
+using Npgsql;
 
 namespace GestorContrasena.ViewModels
 {
@@ -28,13 +30,24 @@ namespace GestorContrasena.ViewModels
 
             } else
             {
-                var login = this.authService.Login(user); // Hacer un try/catch aquí con excepción personalizada cuando no se encuentre el usuario por email
-                if (login != null && login == true)
+                try
                 {
-                    MessageBox.Show("Inicio de sesión realizado correctamente.", "Inicio de sesión correcto");
-                } else
+                    var login = this.authService.Login(user); // Hacer un try/catch aquí con excepción personalizada cuando no se encuentre el usuario por email
+                    if (login)
+                    {
+                        MessageBox.Show("Inicio de sesión realizado correctamente.", "Inicio de sesión correcto");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Credenciales incorrectas.", "Error en el inicio de sesión");
+                    }
+
+                } catch (InvalidCredentialsException e)
                 {
-                    MessageBox.Show("No se ha podido realizar el inicio de sesión. Consulte con su técnico.", "Error en el inicio de sesión");
+                    MessageBox.Show(e.Message, "Error en el inicio de sesión");
+                } catch (NpgsqlException)
+                {
+                    MessageBox.Show("Servicio no disponible. Por favor, contacte con su técnico.", "Servicio no disponible");
                 }
             }
         }

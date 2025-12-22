@@ -2,6 +2,7 @@
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using GestorContrasena.Schemas;
+using Npgsql;
 
 namespace GestorContrasena.ViewModels
 {
@@ -41,7 +42,7 @@ namespace GestorContrasena.ViewModels
                 {
                     var result = this.authService.Register(user);
 
-                    if (result != null)
+                    if (result)
                     {
                         MessageBox.Show("Registro realizado correctamente.", "Registro correcto");
                     }
@@ -53,8 +54,11 @@ namespace GestorContrasena.ViewModels
                 } catch (EmailAlreadyExistsException e)
                 {
                     MessageBox.Show(e.Message, "Error en el registro");
+                } catch (NpgsqlException)
+                {
+                    MessageBox.Show("Servicio no disponible. Por favor, contacte con su técnico.", "Servicio no disponible");
                 }
-                
+
             }
         }
 

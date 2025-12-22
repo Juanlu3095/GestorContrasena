@@ -46,7 +46,7 @@ namespace GestorContrasena.Models
 
         public UserEntity? GetById(Guid id)
         {
-            UserEntity user = new UserEntity();
+            UserEntity? user = null;
 
             try
             {
@@ -58,6 +58,7 @@ namespace GestorContrasena.Models
                 
                 if (reader.Read())
                 {
+                    user = new UserEntity();
                     user.Id = reader.GetGuid(reader.GetOrdinal("id"));
                     user.Name = reader.GetString(reader.GetOrdinal("name"));
                     user.Email = reader.GetString(reader.GetOrdinal("email"));
@@ -75,7 +76,7 @@ namespace GestorContrasena.Models
 
         public UserEntity? GetByEmail(string email)
         {
-            UserEntity user = new UserEntity();
+            UserEntity? user = null; // Necesitamos hacer esto null para que en el caso de no encontrar ninguna fila, el resto de componentes pueda comprobarlo fácilmente.
 
             try
             {
@@ -87,6 +88,7 @@ namespace GestorContrasena.Models
 
                 if (reader.Read())
                 {
+                    user = new UserEntity(); // Aquí si hay user, le pasamos las columnas
                     user.Name = reader.GetString(reader.GetOrdinal("name"));
                     user.Email = reader.GetString(reader.GetOrdinal("email"));
                     user.Password = reader.GetString(reader.GetOrdinal("password"));

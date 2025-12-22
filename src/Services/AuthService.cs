@@ -1,8 +1,6 @@
 ﻿using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
-using Npgsql;
-using System.Diagnostics;
 
 namespace GestorContrasena.Services
 {
@@ -19,49 +17,41 @@ namespace GestorContrasena.Services
             this.bcryptcost = bcryptcost != 0 ? bcryptcost : 12;
         }
 
-        public bool? Register(UserRegisterInput user)
+        public bool Register(UserRegisterInput user)
         {
-            try
+            var repeatedUsers = this.userQueries.CountByEmail(user.Email);
+
+            if (repeatedUsers == 0)
             {
-                var repeatedUsers = this.userQueries.CountByEmail(user.Email);
+                var HashPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, bcryptcost); // Si no se pone, el valor de workFactor es 10
+                user.Password = HashPassword;
 
-                if(repeatedUsers == 0)
-                {
-                    var HashPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, bcryptcost); // Si no se pone, el valor de workFactor es 10
-                    user.Password = HashPassword;
+                return this.userModel.Create(user) == 1 ? true : false;
 
-                    return this.userModel.Create(user) == 1 ? true : false;
-
-                } else
-                {
-                    throw new EmailAlreadyExistsException("El email introducido ya existe.");
-                }
-
-            } catch (NpgsqlException e)
+            }
+            else
             {
-                System.Diagnostics.Debug.WriteLine("Ha ocurrido un error al obtener los usuarios: " + e);
-                return null;
+                throw new EmailAlreadyExistsException("El email introducido ya existe.");
             }
         }
 
-        public bool? Login(UserLoginInput LoginInput)
+        public bool Login(UserLoginInput LoginInput)
         {
-            try
-            {
-                var user = this.userModel.GetByEmail(LoginInput.Email);
+            var user = this.userModel.GetByEmail(LoginInput.Email);
 
-                if (user == null)
-                {
-                    return false;
-                }
-
-                return BCrypt.Net.BCrypt.Verify(LoginInput.Password, user.Password);
-                
-            } catch (NpgsqlException e)
+            if (user == null)
             {
-                System.Diagnostics.Debug.WriteLine("Ha ocurrido un error al obtener el usuario: " + e);
-                return null;
+                throw new InvalidCredentialsException("Credenciales incorrectas.");
             }
+
+            var loginResult = BCrypt.Net.BCrypt.Verify(LoginInput.Password, user.Password);
+
+            if (!loginResult)
+            {
+                throw new InvalidCredentialsException("Credenciales incorrectas.");
+            }
+
+            return true;
         }
 
         public bool VerifyLogin()
