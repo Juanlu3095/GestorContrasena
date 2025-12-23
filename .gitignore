@@ -1,4 +1,6 @@
 ﻿src/bin/
 src/obj/
+src/App.config
 .env
 .vs
+Properties/

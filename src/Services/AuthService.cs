@@ -1,6 +1,8 @@
-﻿using GestorContrasena.Contracts.Entities.User;
+﻿using GestorContrasena.Common;
+using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
+using System.Diagnostics;
 
 namespace GestorContrasena.Services
 {
@@ -51,12 +53,16 @@ namespace GestorContrasena.Services
                 throw new InvalidCredentialsException("Credenciales incorrectas.");
             }
 
+            Session.Initialize(user.Id, user.Name, user.Email);
+
             return true;
         }
 
         public bool VerifyLogin()
         {
-            return false;
+            if (!Session.IsAuthenticated()) return false;
+
+            return true;
         }
 
         public bool Logout()
