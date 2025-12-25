@@ -61,7 +61,6 @@ namespace GestorContrasena.Bootstrap
 
             // Events for navigation
             LoginViewModel.OnNavigate += Navigate;
-            
         }
 
         // It allows to open or close the views.

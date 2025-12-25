@@ -2,7 +2,6 @@
 using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
-using System.Diagnostics;
 
 namespace GestorContrasena.Services
 {
@@ -60,14 +59,13 @@ namespace GestorContrasena.Services
 
         public bool VerifyLogin()
         {
-            if (!Session.IsAuthenticated()) return false;
-
-            return true;
+            return Session.IsAuthenticated();
         }
 
         public bool Logout()
         {
-            return false;
+            Session.End();
+            return !Session.IsAuthenticated();
         }
 
         public void ResetPassword()
