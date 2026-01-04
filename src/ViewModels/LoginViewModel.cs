@@ -36,6 +36,7 @@ namespace GestorContrasena.ViewModels
                     if (login)
                     {
                         MessageBox.Show("Inicio de sesión realizado correctamente.", "Inicio de sesión correcto");
+                        this.OnNavigate?.Invoke("PasswordList");
                     }
                     else
                     {

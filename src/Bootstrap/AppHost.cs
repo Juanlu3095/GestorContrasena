@@ -5,6 +5,7 @@ using GestorContrasena.Views;
 using GestorContrasena.Utilities;
 using GestorContrasena.Services;
 using GestorContrasena.Database.Queries;
+using GestorContrasena.Views.Passwords;
 
 namespace GestorContrasena.Bootstrap
 {
@@ -19,12 +20,15 @@ namespace GestorContrasena.Bootstrap
 
         private Connection Connection;
         private UserModel UserModel;
+        private PasswordModel PasswordModel;
         private UserQueries UserQueries;
         private AuthService AuthService; 
         private RegisterViewModel RegisterViewModel;
         private LoginViewModel LoginViewModel;
+        private PasswordListViewModel PasswordListViewModel;
         public Register RegisterView;
         public Login LoginView;
+        public PasswordList PasswordList;
 
         public AppHost ()
         {
@@ -44,6 +48,7 @@ namespace GestorContrasena.Bootstrap
 
             // Models
             UserModel = new UserModel(this.Connection);
+            PasswordModel = new PasswordModel(this.Connection);
 
             // Queries
             UserQueries = new UserQueries(this.Connection);
@@ -54,22 +59,24 @@ namespace GestorContrasena.Bootstrap
             // ViewModels
             RegisterViewModel = new RegisterViewModel(this.AuthService);
             LoginViewModel = new LoginViewModel(this.AuthService);
+            PasswordListViewModel = new PasswordListViewModel(this.PasswordModel);
 
             // Views
             RegisterView = new Register(this.RegisterViewModel);
             LoginView = new Login(this.LoginViewModel);
+            PasswordList = new PasswordList(this.PasswordListViewModel);
 
             // Events for navigation
             LoginViewModel.OnNavigate += Navigate;
         }
 
         // It allows to open or close the views.
-        public void Navigate(string destino)
+        public void Navigate(string view)
         {
-            switch(destino)
+            switch(view)
             {
                 case "Login":
-                    System.Diagnostics.Debug.WriteLine("Ha llegado el evento para inicio sesión");
+                    this.LoginView.Show();
                     break;
 
                 case "Register":
@@ -77,6 +84,26 @@ namespace GestorContrasena.Bootstrap
                     break;
 
                 case "PasswordList":
+                    this.PasswordList.Show();
+                    break;
+            }
+        }
+
+        // It allows to close a view.
+        public void Close(string view)
+        {
+            switch (view)
+            {
+                case "Login":
+                    this.LoginView.Hide();
+                    break;
+
+                case "Register":
+                    this.RegisterView.Close();
+                    break;
+
+                case "PasswordList":
+                    this.PasswordList.Close();
                     break;
             }
         }
