@@ -26,9 +26,11 @@ namespace GestorContrasena.Bootstrap
         private RegisterViewModel RegisterViewModel;
         private LoginViewModel LoginViewModel;
         private PasswordListViewModel PasswordListViewModel;
+        private PasswordCreateViewModel PasswordCreateViewModel;
         public Register RegisterView;
         public Login LoginView;
-        public PasswordList PasswordList;
+        public PasswordList PasswordListView;
+        public PasswordCreate PasswordCreateView;
 
         public AppHost ()
         {
@@ -60,14 +62,21 @@ namespace GestorContrasena.Bootstrap
             RegisterViewModel = new RegisterViewModel(this.AuthService);
             LoginViewModel = new LoginViewModel(this.AuthService);
             PasswordListViewModel = new PasswordListViewModel(this.PasswordModel);
+            PasswordCreateViewModel = new PasswordCreateViewModel(this.PasswordModel);
 
             // Views
             RegisterView = new Register(this.RegisterViewModel);
             LoginView = new Login(this.LoginViewModel);
-            PasswordList = new PasswordList(this.PasswordListViewModel);
+            PasswordListView = new PasswordList(this.PasswordListViewModel);
+            PasswordCreateView = new PasswordCreate(this.PasswordCreateViewModel);
 
             // Events for navigation
             LoginViewModel.OnNavigate += Navigate;
+            PasswordListViewModel.OnNavigate += Navigate;
+
+            // Events to close views
+            LoginViewModel.OnClose += Close;
+            
         }
 
         // It allows to open or close the views.
@@ -80,11 +89,18 @@ namespace GestorContrasena.Bootstrap
                     break;
 
                 case "Register":
+                    if (RegisterView.IsDisposed) this.RegisterView = new Register(this.RegisterViewModel);
                     this.RegisterView.Show();
                     break;
 
                 case "PasswordList":
-                    this.PasswordList.Show();
+                    if (PasswordListView.IsDisposed) this.PasswordListView = new PasswordList(this.PasswordListViewModel);// Si se cierra el form dará un error de que se ha eliminado el form
+                    this.PasswordListView.Show();
+                    break;
+
+                case "PasswordCreate":
+                    if (PasswordCreateView.IsDisposed) this.PasswordCreateView = new PasswordCreate(this.PasswordCreateViewModel);
+                    this.PasswordCreateView.Show();
                     break;
             }
         }
@@ -103,7 +119,7 @@ namespace GestorContrasena.Bootstrap
                     break;
 
                 case "PasswordList":
-                    this.PasswordList.Close();
+                    this.PasswordListView.Close();
                     break;
             }
         }

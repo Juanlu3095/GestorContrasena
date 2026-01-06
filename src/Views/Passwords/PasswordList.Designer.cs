@@ -29,9 +29,12 @@
         private void InitializeComponent()
         {
             labelPasswordList = new Label();
-            tableLayoutPanel1 = new TableLayoutPanel();
             FilterButton = new Button();
             FilterInput = new TextBox();
+            PasswordDataGridView = new DataGridView();
+            NewElementButton = new Button();
+            RefreshButton = new Button();
+            ((System.ComponentModel.ISupportInitialize)PasswordDataGridView).BeginInit();
             SuspendLayout();
             // 
             // labelPasswordList
@@ -44,22 +47,9 @@
             labelPasswordList.TabIndex = 0;
             labelPasswordList.Text = "Listado de contraseñas";
             // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Location = new Point(12, 117);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(776, 321);
-            tableLayoutPanel1.TabIndex = 1;
-            // 
             // FilterButton
             // 
-            FilterButton.Location = new Point(517, 74);
+            FilterButton.Location = new Point(386, 73);
             FilterButton.Name = "FilterButton";
             FilterButton.Size = new Size(75, 23);
             FilterButton.TabIndex = 2;
@@ -68,23 +58,54 @@
             // 
             // FilterInput
             // 
-            FilterInput.Location = new Point(240, 74);
+            FilterInput.Location = new Point(124, 73);
             FilterInput.Name = "FilterInput";
             FilterInput.PlaceholderText = "Introduzca término de búsqueda...";
             FilterInput.Size = new Size(256, 23);
             FilterInput.TabIndex = 3;
+            // 
+            // PasswordDataGridView
+            // 
+            PasswordDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            PasswordDataGridView.Location = new Point(12, 117);
+            PasswordDataGridView.Name = "PasswordDataGridView";
+            PasswordDataGridView.Size = new Size(776, 321);
+            PasswordDataGridView.TabIndex = 4;
+            // 
+            // NewElementButton
+            // 
+            NewElementButton.Location = new Point(467, 73);
+            NewElementButton.Name = "NewElementButton";
+            NewElementButton.Size = new Size(126, 23);
+            NewElementButton.TabIndex = 5;
+            NewElementButton.Text = "Nuevo elemento";
+            NewElementButton.UseVisualStyleBackColor = true;
+            NewElementButton.Click += OpenCreatePasswordViewAction;
+            // 
+            // RefreshButton
+            // 
+            RefreshButton.Location = new Point(599, 73);
+            RefreshButton.Name = "RefreshButton";
+            RefreshButton.Size = new Size(75, 23);
+            RefreshButton.TabIndex = 6;
+            RefreshButton.Text = "Refrescar";
+            RefreshButton.UseVisualStyleBackColor = true;
+            RefreshButton.Click += RefreshTable;
             // 
             // PasswordList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(RefreshButton);
+            Controls.Add(NewElementButton);
+            Controls.Add(PasswordDataGridView);
             Controls.Add(FilterInput);
             Controls.Add(FilterButton);
-            Controls.Add(tableLayoutPanel1);
             Controls.Add(labelPasswordList);
             Name = "PasswordList";
             Text = "Listado de contraseñas";
+            ((System.ComponentModel.ISupportInitialize)PasswordDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -92,8 +113,10 @@
         #endregion
 
         private Label labelPasswordList;
-        private TableLayoutPanel tableLayoutPanel1;
         private Button FilterButton;
         private TextBox FilterInput;
+        private DataGridView PasswordDataGridView;
+        private Button NewElementButton;
+        private Button RefreshButton;
     }
 }

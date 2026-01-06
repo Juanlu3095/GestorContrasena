@@ -10,6 +10,7 @@ namespace GestorContrasena.ViewModels
     {
         private readonly AuthServiceInterface authService = authService;
         public event Action<string>? OnNavigate;
+        public event Action<string>? OnClose;
 
         public void LoginAction(string email, string password)
         {
@@ -37,6 +38,7 @@ namespace GestorContrasena.ViewModels
                     {
                         MessageBox.Show("Inicio de sesión realizado correctamente.", "Inicio de sesión correcto");
                         this.OnNavigate?.Invoke("PasswordList");
+                        this.CloseLogin();
                     }
                     else
                     {
@@ -56,6 +58,11 @@ namespace GestorContrasena.ViewModels
         public void ToRegister()
         {
             this.OnNavigate?.Invoke("Register");
+        }
+
+        public void CloseLogin()
+        {
+            this.OnClose?.Invoke("Login");
         }
     }
 }

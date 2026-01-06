@@ -5,7 +5,7 @@ namespace GestorContrasena.Contracts.Entities.Password
     {
         public required string Name { get; set; }
         public required string Value { get; set; }
-        public string? Service { get; set; }
+        public required string Service { get; set; }
         public string? Observations { get; set; }
     }
 }

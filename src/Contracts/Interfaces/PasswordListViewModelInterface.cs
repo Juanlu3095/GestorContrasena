@@ -1,8 +1,12 @@
 ﻿
+using GestorContrasena.Contracts.Entities.Password;
+
 namespace GestorContrasena.Contracts.Interfaces
 {
-    public interface PasswordListViewModelInterface
+    internal interface PasswordListViewModelInterface
     {
-
+        public List<PasswordEntity>? GetAllPasswords();
+        public void ToPasswordCreate();
+        public void ToLogin(object sender, FormClosedEventArgs e);
     }
 }
