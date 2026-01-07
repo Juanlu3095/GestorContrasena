@@ -43,6 +43,9 @@ namespace GestorContrasena.ViewModels
                     if (resultCreatePassword > 0)
                     {
                         MessageBox.Show("Elemento creado correctamente.", "Nuevo elemento creado correctamente");
+                    } else
+                    {
+                        MessageBox.Show("Servicio no disponible.", "Error al crear nuevo elemento");
                     }
                 } catch (ResourceNotCreatedException)
                 {

@@ -4,6 +4,7 @@ using GestorContrasena.Contracts.Entities.User;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using Npgsql;
+using System.Data;
 
 namespace GestorContrasena.Models
 {
@@ -33,8 +34,8 @@ namespace GestorContrasena.Models
                 password.Value = reader.GetString(reader.GetOrdinal("value"));
                 password.Service = reader.GetString(reader.GetOrdinal("service"));
                 password.Observations = reader.GetString(reader.GetOrdinal("observations"));
-                password.Created_at = reader.GetString(reader.GetOrdinal("created_at"));
-                password.Updated_at = reader.GetString(reader.GetOrdinal("updated_at"));
+                password.Created_at = reader.GetDateTime(reader.GetOrdinal("created_at"));
+                password.Updated_at = reader.GetDateTime(reader.GetOrdinal("updated_at"));
 
                 passwords.Add(password);
             }
@@ -63,8 +64,8 @@ namespace GestorContrasena.Models
                     password.Value = reader.GetString(reader.GetOrdinal("value"));
                     password.Service = reader.GetString(reader.GetOrdinal("service"));
                     password.Observations = reader.GetString(reader.GetOrdinal("observations"));
-                    password.Created_at = reader.GetString(reader.GetOrdinal("created_at"));
-                    password.Updated_at = reader.GetString(reader.GetOrdinal("updated_at"));
+                    password.Created_at = reader.GetDateTime(reader.GetOrdinal("created_at"));
+                    password.Updated_at = reader.GetDateTime(reader.GetOrdinal("updated_at"));
                 }
 
                 dbconnection?.Close();
@@ -83,7 +84,7 @@ namespace GestorContrasena.Models
             {
                 var dbconnection = this.connection.CreateConnection();
                 dbconnection?.Open();
-                var sqlCommand = new NpgsqlCommand("INSERT INTO passwords (name, value, service, observations) VALUES (@name,@email,@password)", dbconnection);
+                var sqlCommand = new NpgsqlCommand("INSERT INTO passwords (name, value, service, observations) VALUES (@name,@value,@service, @observations)", dbconnection);
                 sqlCommand.Parameters.AddWithValue("name", password.Name);
                 sqlCommand.Parameters.AddWithValue("value", password.Value);
                 sqlCommand.Parameters.AddWithValue("service", password.Service);

@@ -66,6 +66,8 @@
             // 
             // PasswordDataGridView
             // 
+            PasswordDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            PasswordDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             PasswordDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PasswordDataGridView.Location = new Point(12, 117);
             PasswordDataGridView.Name = "PasswordDataGridView";

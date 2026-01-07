@@ -30,7 +30,7 @@ namespace GestorContrasena.Bootstrap
         public Register RegisterView;
         public Login LoginView;
         public PasswordList PasswordListView;
-        public PasswordCreate PasswordCreateView;
+        public PasswordCreateForm PasswordCreateView;
 
         public AppHost ()
         {
@@ -68,7 +68,7 @@ namespace GestorContrasena.Bootstrap
             RegisterView = new Register(this.RegisterViewModel);
             LoginView = new Login(this.LoginViewModel);
             PasswordListView = new PasswordList(this.PasswordListViewModel);
-            PasswordCreateView = new PasswordCreate(this.PasswordCreateViewModel);
+            PasswordCreateView = new PasswordCreateForm(this.PasswordCreateViewModel);
 
             // Events for navigation
             LoginViewModel.OnNavigate += Navigate;
@@ -99,7 +99,7 @@ namespace GestorContrasena.Bootstrap
                     break;
 
                 case "PasswordCreate":
-                    if (PasswordCreateView.IsDisposed) this.PasswordCreateView = new PasswordCreate(this.PasswordCreateViewModel);
+                    if (PasswordCreateView.IsDisposed) this.PasswordCreateView = new PasswordCreateForm(this.PasswordCreateViewModel);
                     this.PasswordCreateView.Show();
                     break;
             }
