@@ -1,6 +1,5 @@
 ﻿using GestorContrasena.Contracts.Entities.Password;
 using GestorContrasena.Contracts.Interfaces;
-using System.Diagnostics;
 
 namespace GestorContrasena.Views.Passwords
 {
@@ -56,9 +55,20 @@ namespace GestorContrasena.Views.Passwords
             this.PasswordListViewModel.ToPasswordCreate();
         }
 
+        public void OpenEditPasswordViewAction(object sender, EventArgs e)
+        {
+
+        }
+
+        public void OpenDeletePasswordViewAction(object sender, EventArgs e)
+        {
+
+        }
+
         public void RefreshTable(object sender, EventArgs e)
         {
-            this.PasswordListViewModel.GetAllPasswords();
+            this.PasswordDataGridView.Rows.Clear(); // Limpia las filas antes de volver a cargarlas y que se repitan
+            this.InitializeTable();
         }
     }
 }
