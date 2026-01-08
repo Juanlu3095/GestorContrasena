@@ -1,5 +1,6 @@
 ﻿using GestorContrasena.Contracts.Entities.Password;
 using GestorContrasena.Contracts.Interfaces;
+using System.Diagnostics;
 
 namespace GestorContrasena.Views.Passwords
 {
@@ -18,20 +19,25 @@ namespace GestorContrasena.Views.Passwords
         public void InitializeTable()
         {
             this.Controls.Add(PasswordDataGridView); // esto para qué sirve ??
-            this.PasswordDataGridView.ColumnCount = 3; // Necesario para evitar error
+            this.PasswordDataGridView.ColumnCount = 4; // Necesario para evitar error
 
             List<PasswordEntity>? Passwords = new List<PasswordEntity>();
             Passwords = this.PasswordListViewModel.GetAllPasswords();
 
-            this.PasswordDataGridView.Columns[0].Name = "Nombre";
-            this.PasswordDataGridView.Columns[1].Name = "Servicio";
-            this.PasswordDataGridView.Columns[2].Name = "Fecha actualización";
+            this.PasswordDataGridView.Columns[0].Name = "Id";
+            this.PasswordDataGridView.Columns[1].Name = "Nombre";
+            this.PasswordDataGridView.Columns[2].Name = "Servicio";
+            this.PasswordDataGridView.Columns[3].Name = "Fecha actualización";
+
+            this.PasswordDataGridView.Columns[0].Visible = false; // Ocultamos la id de la vista, pero la podemos usar para identificar el registro en base de datos para editar.
 
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
             EditButtonColumn.Text = "Ver/Editar";
+            EditButtonColumn.Name = "Editar"; // Esto es lo que se muestra en el header de la tabla, deberia quitarse pero si no, no se puede abrir el MODAL !!
             EditButtonColumn.UseColumnTextForButtonValue = true;
             DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
             DeleteButtonColumn.Text = "Eliminar";
+            DeleteButtonColumn.Name = "Eliminar"; // Esto es lo que se muestra en el header de la tabla
             DeleteButtonColumn.UseColumnTextForButtonValue = true;
             this.PasswordDataGridView.Columns.Add(EditButtonColumn);
             this.PasswordDataGridView.Columns.Add(DeleteButtonColumn);
@@ -42,7 +48,7 @@ namespace GestorContrasena.Views.Passwords
                 {
                     object[] row =
                     {
-                        password.Name, password.Service, password.Updated_at.ToString()
+                        password.Id, password.Name, password.Service, password.Updated_at.ToString()
                     };
                     this.PasswordDataGridView.Rows.Add(row);
                 }
@@ -55,14 +61,56 @@ namespace GestorContrasena.Views.Passwords
             this.PasswordListViewModel.ToPasswordCreate();
         }
 
-        public void OpenEditPasswordViewAction(object sender, EventArgs e)
+        public void FilterAction(object sender, EventArgs e)
         {
-
+            var FilteredPasswords = this.PasswordListViewModel.FilterPasswordsByName(this.FilterInput.Text);
+            if (FilteredPasswords != null && FilteredPasswords.Count > 0)
+            {
+                this.PasswordDataGridView.Rows.Clear(); // Limpia las filas antes de volver a cargarlas y que se repitan
+                foreach (PasswordEntity password in FilteredPasswords)
+                {
+                    object[] row =
+                    {
+                        password.Id, password.Name, password.Service, password.Updated_at.ToString()
+                    };
+                    this.PasswordDataGridView.Rows.Add(row);
+                }
+            }
         }
 
-        public void OpenDeletePasswordViewAction(object sender, EventArgs e)
+        public void TableButtonClick(object sender, DataGridViewCellEventArgs e)
         {
+            // Se debe comprobar si estos valores no son menores de 0 porque sino da un error "Index out of range"
+            int columnIndex = e.ColumnIndex;
+            int rowIndex = e.RowIndex;
 
+            if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[e.ColumnIndex].Name == "Editar") // También podría sólo comprobarse que columnIndex es 3 para edit y 4 para delete
+            {
+                Debug.WriteLine("Has hecho click en el botón de editar con index " + e.RowIndex);
+            }
+
+            if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[e.ColumnIndex].Name == "Eliminar")
+            {
+                var id = PasswordDataGridView.Rows[e.RowIndex].Cells[0].Value ?? "";
+                var name = PasswordDataGridView.Rows[e.RowIndex].Cells[1].Value ?? "";
+                Debug.WriteLine("Has hecho click en el botón de eliminar con index " + e.RowIndex + " y tiene un valor de id " + id); // QUITAR ESTO
+                this.OpenDeletePasswordViewAction(Guid.Parse(id.ToString()), name.ToString());
+            }
+        }
+
+        public void OpenEditPasswordViewAction(Object obj)
+        {
+            Debug.WriteLine("Datos del editbutton: " + obj);
+        }
+
+        public void OpenDeletePasswordViewAction(Guid id, string name)
+        {
+            var DeleteConfirmation = MessageBox.Show("¿Estás seguro/a de querer eliminar la contraseña de nombre '" + name + "'?",
+                "Confirmación para eliminar registro",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+            if (DeleteConfirmation == DialogResult.Yes) this.PasswordListViewModel.DeletePassword(id);
         }
 
         public void RefreshTable(object sender, EventArgs e)

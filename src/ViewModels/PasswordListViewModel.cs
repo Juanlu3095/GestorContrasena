@@ -1,6 +1,7 @@
 ﻿
 
 using GestorContrasena.Contracts.Entities.Password;
+using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using Npgsql;
 
@@ -31,6 +32,38 @@ namespace GestorContrasena.ViewModels
         public void ToPasswordCreate()
         {
             this.OnNavigate?.Invoke("PasswordCreate");
+        }
+
+        public List<PasswordEntity>? FilterPasswordsByName(string name)
+        {
+            try
+            {
+                return this.PasswordModel.GetByName(name);
+            } catch (ResourceNotFoundException)
+            {
+                MessageBox.Show("No se ha encontrado ningún registro por el término '" + name + "'.", "Elemento no encontrado");
+                return null;
+            }
+        }
+
+        public void DeletePassword(Guid id)
+        {
+            try
+            {
+                var result = this.PasswordModel.Delete(id);
+                if (result > 0)
+                {
+                    MessageBox.Show("Contraseña eliminada correctamente.", "Elemento eliminado");
+                }
+                else
+                {
+                    MessageBox.Show("Servicio no disponible.", "Elemento no eliminado");
+                }
+            } catch (ResourceNotDeletedException)
+            {
+                MessageBox.Show("Ha ocurrido un error al eliminar el elemento.", "Elemento no eliminado");
+            }
+            
         }
 
         public void ToLogin(object sender, FormClosedEventArgs e)

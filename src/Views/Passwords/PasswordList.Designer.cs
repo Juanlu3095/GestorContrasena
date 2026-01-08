@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             labelPasswordList = new Label();
             FilterButton = new Button();
             FilterInput = new TextBox();
@@ -55,6 +57,7 @@
             FilterButton.TabIndex = 2;
             FilterButton.Text = "Filtrar";
             FilterButton.UseVisualStyleBackColor = true;
+            FilterButton.Click += FilterAction;
             // 
             // FilterInput
             // 
@@ -68,11 +71,28 @@
             // 
             PasswordDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             PasswordDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            PasswordDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             PasswordDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PasswordDataGridView.Location = new Point(12, 117);
             PasswordDataGridView.Name = "PasswordDataGridView";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            PasswordDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             PasswordDataGridView.Size = new Size(776, 321);
             PasswordDataGridView.TabIndex = 4;
+            PasswordDataGridView.CellClick += TableButtonClick;
             // 
             // NewElementButton
             // 
