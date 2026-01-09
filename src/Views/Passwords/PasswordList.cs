@@ -1,6 +1,5 @@
 ﻿using GestorContrasena.Contracts.Entities.Password;
 using GestorContrasena.Contracts.Interfaces;
-using System.Diagnostics;
 
 namespace GestorContrasena.Views.Passwords
 {
@@ -78,6 +77,7 @@ namespace GestorContrasena.Views.Passwords
             }
         }
 
+        // Función que escucha los clicks en la tabla, el cual se asigna en PasswordList.Designer
         public void TableButtonClick(object sender, DataGridViewCellEventArgs e)
         {
             // Se debe comprobar si estos valores no son menores de 0 porque sino da un error "Index out of range"
@@ -86,21 +86,21 @@ namespace GestorContrasena.Views.Passwords
 
             if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[e.ColumnIndex].Name == "Editar") // También podría sólo comprobarse que columnIndex es 3 para edit y 4 para delete
             {
-                Debug.WriteLine("Has hecho click en el botón de editar con index " + e.RowIndex);
+                Guid id = Guid.Parse(this.PasswordDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString() ?? "");
+                this.OpenEditPasswordViewAction(id);
             }
 
             if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[e.ColumnIndex].Name == "Eliminar")
             {
                 var id = PasswordDataGridView.Rows[e.RowIndex].Cells[0].Value ?? "";
                 var name = PasswordDataGridView.Rows[e.RowIndex].Cells[1].Value ?? "";
-                Debug.WriteLine("Has hecho click en el botón de eliminar con index " + e.RowIndex + " y tiene un valor de id " + id); // QUITAR ESTO
-                this.OpenDeletePasswordViewAction(Guid.Parse(id.ToString()), name.ToString());
+                this.OpenDeletePasswordViewAction(Guid.Parse(id.ToString() ?? ""), name.ToString() ?? "");
             }
         }
 
-        public void OpenEditPasswordViewAction(Object obj)
+        public void OpenEditPasswordViewAction(Guid id)
         {
-            Debug.WriteLine("Datos del editbutton: " + obj);
+            this.PasswordListViewModel.ToPasswordEdit(id);
         }
 
         public void OpenDeletePasswordViewAction(Guid id, string name)

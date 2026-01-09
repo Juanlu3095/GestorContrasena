@@ -4,6 +4,7 @@ using GestorContrasena.Contracts.Entities.Password;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using Npgsql;
+using System.Diagnostics;
 
 namespace GestorContrasena.ViewModels
 {
@@ -11,6 +12,7 @@ namespace GestorContrasena.ViewModels
     {
         private PasswordModelInterface PasswordModel;
         public event Action<string>? OnNavigate;
+        public event Action<object[]>? OnDynamicNavigate;
 
         public PasswordListViewModel(PasswordModelInterface PasswordModel)
         {
@@ -44,6 +46,12 @@ namespace GestorContrasena.ViewModels
                 MessageBox.Show("No se ha encontrado ningún registro por el término '" + name + "'.", "Elemento no encontrado");
                 return null;
             }
+        }
+
+        public void ToPasswordEdit(Guid id)
+        {
+            Object[] args = { "PasswordEdit", id };
+            this.OnDynamicNavigate?.Invoke(args);
         }
 
         public void DeletePassword(Guid id)

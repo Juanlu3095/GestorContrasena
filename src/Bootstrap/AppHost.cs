@@ -6,6 +6,7 @@ using GestorContrasena.Utilities;
 using GestorContrasena.Services;
 using GestorContrasena.Database.Queries;
 using GestorContrasena.Views.Passwords;
+using System.Diagnostics;
 
 namespace GestorContrasena.Bootstrap
 {
@@ -73,6 +74,7 @@ namespace GestorContrasena.Bootstrap
             // Events for navigation
             LoginViewModel.OnNavigate += Navigate;
             PasswordListViewModel.OnNavigate += Navigate;
+            PasswordListViewModel.OnDynamicNavigate += DynamicNavigate;
 
             // Events to close views
             LoginViewModel.OnClose += Close;
@@ -101,6 +103,19 @@ namespace GestorContrasena.Bootstrap
                 case "PasswordCreate":
                     if (PasswordCreateView.IsDisposed) this.PasswordCreateView = new PasswordCreateForm(this.PasswordCreateViewModel);
                     this.PasswordCreateView.Show();
+                    break;
+            }
+        }
+
+        public void DynamicNavigate(Object[] args) // El Object se podría tipar
+        {
+            var view = args[0];
+            var id = args[1];
+
+            switch (view)
+            {
+                case "PasswordEdit":
+                    Debug.WriteLine("Se ha recibido la vista " + view + " con id " + id);
                     break;
             }
         }

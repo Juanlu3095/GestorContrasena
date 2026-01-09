@@ -143,6 +143,33 @@ namespace GestorContrasena.Models
             }
         }
 
+        public int? Update(Guid id, PasswordInput password) // Ver si es necesario mantener la id aquí o se coge la que lleve PasswordEntity
+        {
+            try
+            {
+                var dbconnection = this.connection.CreateConnection();
+                dbconnection?.Open();
+                var sqlCommand = new NpgsqlCommand("UPDATE passwords SET name = @name, value = @value, service = @service, observations = @observations WHERE id = @id", dbconnection);
+                sqlCommand.Parameters.AddWithValue("id", id);
+                sqlCommand.Parameters.AddWithValue("name", password.Name);
+                sqlCommand.Parameters.AddWithValue("name", password.Value);
+                sqlCommand.Parameters.AddWithValue("name", password.Service);
+                sqlCommand.Parameters.AddWithValue("name", password.Observations ?? "");
+                var result = sqlCommand.ExecuteNonQuery();
+                dbconnection?.Close();
+
+                if (!(result > 0)) throw new ResourceNotFoundException("Registro no encontrado.");
+
+                return result;
+
+            }
+            catch (NpgsqlException e)
+            {
+                System.Diagnostics.Debug.WriteLine("Ha ocurrido un error al editar el registro: " + e);
+                return null;
+            }
+        }
+
         public int? Delete(Guid id)
         {
             try

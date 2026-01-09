@@ -10,6 +10,7 @@ namespace GestorContrasena.Contracts.Interfaces
         public PasswordEntity? GetById(Guid id);
         public List<PasswordEntity>? GetByName(string name);
         public int? Create(PasswordInput password);
+        public int? Update(Guid id, PasswordInput password);
         public int? Delete(Guid id);
     }
 }
