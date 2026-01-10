@@ -15,7 +15,7 @@ namespace GestorContrasena.ViewModels
             this.PasswordModel = PasswordModel;
         }
 
-        public void AddPasswordAction(string name, string value, string service, string observations)
+        public bool AddPasswordAction(string name, string value, string service, string observations)
         {
             PasswordInput password = new() // No se está usando el constructor
             {
@@ -35,6 +35,7 @@ namespace GestorContrasena.ViewModels
                     errors += error.Value + "\n";
                 }
                 MessageBox.Show("Error(es) en la creación del nuevo elemento: \n" + errors, "Error al crear elemento");
+                return false;
             } else
             {
                 try
@@ -43,13 +44,16 @@ namespace GestorContrasena.ViewModels
                     if (resultCreatePassword > 0)
                     {
                         MessageBox.Show("Elemento creado correctamente.", "Nuevo elemento creado correctamente");
+                        return true;
                     } else
                     {
                         MessageBox.Show("Servicio no disponible.", "Error al crear nuevo elemento");
+                        return false;
                     }
                 } catch (ResourceNotCreatedException)
                 {
                     MessageBox.Show("Error al crear el nuevo elemento. Contacte con su técnico.", "Error al crear nuevo elemento");
+                    return false;
                 }
             }
         }

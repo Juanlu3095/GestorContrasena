@@ -1,6 +1,6 @@
 ﻿namespace GestorContrasena.Views.Passwords
 {
-    partial class PasswordCreateForm
+    partial class PasswordCreate
     {
         /// <summary>
         /// Required designer variable.
@@ -128,7 +128,7 @@
             SubmitButton.UseVisualStyleBackColor = true;
             SubmitButton.Click += CreatePasswordAction;
             // 
-            // PasswordCreateForm
+            // PasswordCreate
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -143,7 +143,7 @@
             Controls.Add(ValueLabel);
             Controls.Add(NameLabel);
             Controls.Add(labelPasswordCreate);
-            Name = "PasswordCreateForm";
+            Name = "PasswordCreate";
             Text = "Nueva contraseña";
             ResumeLayout(false);
             PerformLayout();

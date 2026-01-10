@@ -4,7 +4,6 @@ using GestorContrasena.Contracts.Entities.Password;
 using GestorContrasena.Contracts.Exceptions;
 using GestorContrasena.Contracts.Interfaces;
 using Npgsql;
-using System.Diagnostics;
 
 namespace GestorContrasena.ViewModels
 {

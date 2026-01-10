@@ -1,6 +1,5 @@
 ﻿
 using GestorContrasena.Contracts.Entities.Password;
-using Npgsql;
 
 namespace GestorContrasena.Contracts.Interfaces
 {

@@ -1,6 +1,5 @@
 ﻿
 using GestorContrasena.Contracts.Entities.Password;
-using Microsoft.VisualBasic.ApplicationServices;
 
 namespace GestorContrasena.Schemas
 {

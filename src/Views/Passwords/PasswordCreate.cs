@@ -3,11 +3,11 @@ using GestorContrasena.Contracts.Interfaces;
 
 namespace GestorContrasena.Views.Passwords
 {
-    public partial class PasswordCreateForm : Form
+    public partial class PasswordCreate : Form
     {
         internal PasswordCreateViewModelInterface PasswordCreateViewModel;
 
-        internal PasswordCreateForm(PasswordCreateViewModelInterface PasswordCreateViewModel)
+        internal PasswordCreate(PasswordCreateViewModelInterface PasswordCreateViewModel)
         {
             InitializeComponent();
             this.PasswordCreateViewModel = PasswordCreateViewModel;
@@ -15,7 +15,14 @@ namespace GestorContrasena.Views.Passwords
 
         public void CreatePasswordAction(object sender, EventArgs e)
         {
-            this.PasswordCreateViewModel.AddPasswordAction(this.NameInput.Text, this.ValueInput.Text, this.ServiceInput.Text, this.ObservationsInput.Text);
+            var CreateResult = this.PasswordCreateViewModel.AddPasswordAction(this.NameInput.Text, this.ValueInput.Text, this.ServiceInput.Text, this.ObservationsInput.Text);
+            if (CreateResult)
+            {
+                this.NameInput.ResetText();
+                this.ValueInput.ResetText();
+                this.ServiceInput.ResetText();
+                this.ObservationsInput.ResetText();
+            }
         }
     }
 }

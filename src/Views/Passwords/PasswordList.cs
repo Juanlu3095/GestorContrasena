@@ -84,18 +84,22 @@ namespace GestorContrasena.Views.Passwords
             int columnIndex = e.ColumnIndex;
             int rowIndex = e.RowIndex;
 
-            if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[e.ColumnIndex].Name == "Editar") // También podría sólo comprobarse que columnIndex es 3 para edit y 4 para delete
+            if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[columnIndex].Name == "Editar") // También podría sólo comprobarse que columnIndex es 3 para edit y 4 para delete
             {
+                if (this.PasswordDataGridView.Rows[e.RowIndex].Cells[0].Value == null) return; // Se hace esto para que al pulsar fuera de los datos no salte error al devolver alguno de estos dos el valor null
                 Guid id = Guid.Parse(this.PasswordDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString() ?? "");
                 this.OpenEditPasswordViewAction(id);
             }
 
-            if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[e.ColumnIndex].Name == "Eliminar")
+            if (columnIndex >= 0 && rowIndex >= 0 && this.PasswordDataGridView.Columns[columnIndex].Name == "Eliminar")
             {
+                if (this.PasswordDataGridView.Rows[e.RowIndex].Cells[0].Value == null) return; // Igual que en el if de antes, cuando se pulsa en columna eliminar donde no hay valor
                 var id = PasswordDataGridView.Rows[e.RowIndex].Cells[0].Value ?? "";
                 var name = PasswordDataGridView.Rows[e.RowIndex].Cells[1].Value ?? "";
                 this.OpenDeletePasswordViewAction(Guid.Parse(id.ToString() ?? ""), name.ToString() ?? "");
             }
+
+            return;
         }
 
         public void OpenEditPasswordViewAction(Guid id)
