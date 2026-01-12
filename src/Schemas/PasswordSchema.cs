@@ -29,7 +29,7 @@ namespace GestorContrasena.Schemas
                 result.setErrorService("El campo servicio no tiene un formato correcto.");
             }
 
-            if (String.IsNullOrWhiteSpace(password.Observations))
+            if (password.Observations == null)
             {
                 result.success = false;
                 result.setErrorObservations("El campo observaciones no tiene un formato correcto.");
